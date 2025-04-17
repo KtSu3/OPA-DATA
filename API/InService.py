@@ -6,12 +6,15 @@ import time
 #-------------------------------------------------------------API---------------------------------------------------------#
 
 url = "https://enderecoAplicacao/apiEndpoint"
+
+
+print(url)
 payload = json.dumps({
   "filter": {
-"status": "AG",
+"status": "EA",
 },
 
-})
+})  
 headers = {
   'Authorization': 'Bearer TokenExample',
   'Content-Type': 'application/json'
@@ -19,7 +22,6 @@ headers = {
 
 response = requests.request("GET", url, headers=headers, data=payload)
 data = response.json()
-
 
 #-------------------------------------------------------------API---------------------------------------------------------#
 
@@ -42,9 +44,8 @@ response = requests.request("GET", url, headers=headers, data=payload)
 data2 = response.json()
 
 
-
 #--------------------------------------------------------CONECT DATABASE---------------------------------------------------#
-def connect_db4(): 
+def connect_db1(): 
     try:
         connection = mysql.connector.connect(
             host='',
@@ -54,7 +55,7 @@ def connect_db4():
         )
         if connection.is_connected():
             print('Sucess conection')
-            insert_table(connection, data, data2)
+            insert_table(connection, data, data2) 
             connection.close()
     except Error as e:
         print('Falha ao conectar ao banco:', e)
@@ -62,32 +63,33 @@ def connect_db4():
 
 
 
-#--------------------------------------------------------INSERT TABLE---------------------------------------------------#
 def insert_table(connection, data, data2):
     try:
         cursor = connection.cursor()
-        cursor.execute("DELETE FROM aguardando_atendimento;")
-        
-        for item in data["data"]:  
-            protocol = item['protocolo'] 
+       
+        cursor.execute("TRUNCATE TABLE em_atendimento;")
+
+        for item in data["data"]:
+            protocol = item['protocolo']
             department_id = item['setor']
-            attendant_id = item['id_atendente']
             client = item['id_cliente']
+            attendant_id = item['id_atendente']
             service_start_date = item['date']
             s = service_start_date.split('T')[0] + ' ' + service_start_date.split('T')[1].split('.')[0]
             sql = f'''
-                INSERT INTO aguardando_atendimento (protocol, department, attendant, client, service_start_date)
+                INSERT INTO em_atendimento (protocol, department, attendant, client, service_start_date)
                 VALUES ('{protocol}', '{department_id}', '{attendant_id}', '{client}', DATE_SUB('{s}', INTERVAL 3 HOUR));
-                    '''
-            
+            '''
             cursor.execute(sql)
-        
-        
+            
+
+       
         connection.commit()
         connection.close()
-        print("Success insert data.")
+        print("Success insert data 2.")
     except Error as e:
-            print("Error insert data:", e)
-            connection.rollback()
+        print("Error insert data:", e)
+        connection.rollback()
 
-connect_db4()
+
+connect_db1()
