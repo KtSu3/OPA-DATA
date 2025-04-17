@@ -21,7 +21,7 @@ payload = json.dumps({
 
 })
 headers = {
-  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDE4MWI0YTQ4MDMxN2RlMzBmMzBiOCIsImlhdCI6MTcyMDQ2MTU1MX0.C17b8No_sPRXyhmjk4kTCiMQj9eAvQJ10CwooC1HzOk',
+  'Authorization': 'Bearer TokenExample',
   'Content-Type': 'application/json'
 }
 
@@ -45,7 +45,7 @@ payload= json.dumps({
 })
 
 headers = {
-  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDE4MWI0YTQ4MDMxN2RlMzBmMzBiOCIsImlhdCI6MTcyMDQ2MTU1MX0.C17b8No_sPRXyhmjk4kTCiMQj9eAvQJ10CwooC1HzOk',
+  'Authorization': 'Bearer TokenExample',
   'Content-Type': 'application/json'
 }
 
